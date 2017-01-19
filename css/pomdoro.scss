@@ -1,3 +1,6 @@
+/*----------------------------*\
+  1. MAIN SETUP
+\*----------------------------*/
 $primary-color-dark:   #455A64;
 $primary-color:        #607D8B;
 $primary-color-light:  #CFD8DC;
@@ -8,12 +11,14 @@ $secondary-text-color: #757575;
 $divider-color:        #BDBDBD;
 
 
-/*----------------------------*\
-  1. MAIN SETUP
-\*----------------------------*/
 body {
+  background: $primary-color-dark;
   color: $primary-color-text;
   font-family: 'Roboto', sans-serif;
+}
+
+.hide {
+  display: none;
 }
 
 
@@ -50,7 +55,6 @@ body {
 .display {
   border: 10px solid $primary-color-dark;
   border-radius: 100%;
-  cursor: pointer;
   display: flex;
   margin: 0 auto;
   max-height: 243px;
@@ -75,7 +79,7 @@ body {
   4. NUMBER BOXES
 \*----------------------------*/
 .number-row {
-  margin-top: 25%;
+  margin-top: 15%;
   text-align: center;
 }
 
@@ -133,4 +137,24 @@ body {
 
   button:focus {
     outline: none;
+  }
+
+/*----------------------------*\
+  5. CONTROLS
+\*----------------------------*/
+
+.control-row {
+  color: $primary-color-dark;
+  font-size: 44px;
+  margin-top: 10%;
+  height: 44px;
+  text-align: center;
+}
+
+  .play {
+    cursor: pointer;
+  }
+
+  .pause {
+    cursor: pointer;
   }

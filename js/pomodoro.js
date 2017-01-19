@@ -1,36 +1,51 @@
 var minuteDisplay = document.querySelector(".minutes");
 var secondsDisplay = document.querySelector(".seconds");
-var display = document.querySelector(".display");
 var pomodoroMinutes = document.querySelector(".pomodoro-minutes");
 var breakMinutes = document.querySelector(".break-minutes");
 
-function countSeconds() {
-  for (var i = 0; i < 60; i++) {
+function updateDisplay(minutes, j) {
+  minuteDisplay.textContent = Math.floor((minutes - j) / 60).toString();
+  if (((minutes - j) % 60) >= 0 && ((minutes - j) % 60) <= 9) {
+    secondsDisplay.textContent = "0" + ((minutes - j) % 60).toString();
+  } else {
+    secondsDisplay.textContent = ((minutes - j) % 60).toString();
+  }
+}
+
+function timer(minutes) {
+  for (var i = minutes; i > 0; i--) {
     let j = i;
     setTimeout(function() {
-      if (j >= 50 && j <= 59) {
-        secondsDisplay.textContent = "0" + (59-j).toString();
-      } else {
-        secondsDisplay.textContent = (59 - j).toString();
-      }
-
+      updateDisplay(minutes, j);
     }, j * 1000);
   }
 }
 
-function countMinutes(minutes) {
-  setTimeout(function() {
-    minuteDisplay.textContent = (minutes - 1).toString();
-  }, 60 * 1000);
-  countSeconds();
-}
-
-display.addEventListener("click", function() {
+document.querySelector(".play").addEventListener("click", function() {
   var minutes = Number(pomodoroMinutes.value);
-  for (var i = minutes; i > 0; i--) {
-    countSeconds();
-    countMinutes(minutes);
-  }
+  timer(minutes * 60);
+  document.querySelector(".play").classList.add("hide");
+  document.querySelector(".pause").classList.remove("hide");
 });
 
-// console.log(minutes);
+document.querySelector(".pause").addEventListener("click", function() {
+  clearTimeout();
+  document.querySelector(".pause").classList.add("hide");
+  document.querySelector(".play").classList.remove("hide");
+});
+
+document.querySelector(".pomodoro-minus").addEventListener("click", function() {
+  pomodoroMinutes.value--;
+});
+
+document.querySelector(".pomodoro-plus").addEventListener("click", function() {
+  pomodoroMinutes.value++;
+});
+
+document.querySelector(".break-minus").addEventListener("click", function() {
+  breakMinutes.value--;
+});
+
+document.querySelector(".break-plus").addEventListener("click", function() {
+  breakMinutes.value++;
+});

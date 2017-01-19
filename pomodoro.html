@@ -5,21 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pomodoro Clock</title>
     <link href="https://fonts.googleapis.com/css?family=Roboto|Ubuntu:300,400" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="css/pomdoro.min.css">
   </head>
   <body>
     <div class="clock-container">
       <h1 class="header">Pomodoro Timer</h1>
       <div class="display">
-        <span class="clock"><span class="minutes">3</span>:<span class="seconds">00</span></span>
+        <span class="clock"><span class="minutes"></span>:<span class="seconds"></span></span>
       </div>
       <div class="number-row">
-        <button type="button" name="minus">-</button>
+        <button class="pomodoro-minus" type="button" name="minus">-</button>
         <input class="pomodoro-minutes" type="text" name="pomodoro-session" value="25" readonly>
-        <button type="button" name="plus">+</button>
-        <button type="button" name="minus">-</button>
+        <button class="pomodoro-plus" type="button" name="plus">+</button>
+        <button class="break-minus" type="button" name="minus">-</button>
         <input class="break-minutes" type="text" name="break-session" value="5" readonly>
-        <button type="button" name="plus">+</button>
+        <button class="break-plus" type="button" name="plus">+</button>
+      </div>
+      <div class="control-row">
+        <i class="fa fa-play-circle-o play" aria-hidden="true"></i>
+        <i class="fa fa-pause-circle-o pause hide" aria-hidden="true"></i>
       </div>
     </div>
     <script type="text/javascript" src="js/pomodoro.js"></script>
