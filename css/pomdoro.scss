@@ -63,7 +63,7 @@ body {
   height: 100%;
 }
 
-  .clock {
+  #clock {
     align-items: center;
     font-size: 40px;
     height: 40px;
@@ -88,7 +88,6 @@ body {
     border: none;
     border-bottom: 4px solid $divider-color;
     color: $primary-color-text;
-    cursor: default;
     font-size: 20px;
     text-align: center;
     width: 92px;
@@ -99,45 +98,17 @@ body {
     outline: none;
   }
 
-  button {
-    background: $primary-color;
-    border: none;
-    color: $divider-color;
-    font-size: 20px;
-    font-weight: bolder;
-    padding: 0;
-    position: relative;
-    text-align: center;
-    margin: 0;
-    width: 10px;
-    height: 27px;
+  .number-row input:first-child {
+    margin-right: 5%;
   }
 
-  button:nth-child(3) {
-    margin-right: 15px;
+  .number-row input:last-child {
+    margin-left: 5%;
   }
 
-  button:nth-child(4) {
-    margin-left: 15px;
-  }
 
-  button:nth-child(1),
-  button:nth-child(4) {
-    left: 12px;
-  }
 
-  button:nth-child(3),
-  button:nth-child(6) {
-    left: -16px;
-  }
 
-  button:hover {
-    cursor:pointer;
-  }
-
-  button:focus {
-    outline: none;
-  }
 
 /*----------------------------*\
   5. CONTROLS

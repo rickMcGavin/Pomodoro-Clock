@@ -12,15 +12,11 @@
     <div class="clock-container">
       <h1 class="header">Pomodoro Timer</h1>
       <div class="display">
-        <span class="clock"><span class="minutes"></span>:<span class="seconds"></span></span>
+        <span id="clock"></span>
       </div>
       <div class="number-row">
-        <button class="pomodoro-minus" type="button" name="minus">-</button>
-        <input class="pomodoro-minutes" type="text" name="pomodoro-session" value="25" readonly>
-        <button class="pomodoro-plus" type="button" name="plus">+</button>
-        <button class="break-minus" type="button" name="minus">-</button>
-        <input class="break-minutes" type="text" name="break-session" value="5" readonly>
-        <button class="break-plus" type="button" name="plus">+</button>
+        <input class="pomodoro-minutes" type="number" name="pomodoro-session" value="25">
+        <input class="break-minutes" type="number" name="break-session" value="5">
       </div>
       <div class="control-row">
         <i class="fa fa-play-circle-o play" aria-hidden="true"></i>
