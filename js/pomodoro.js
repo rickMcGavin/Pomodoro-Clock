@@ -9,33 +9,6 @@
     this.timeLeft = sessionMinutes * 60;
   };
 
-  // Pomodoro.protoype.updateState = function(state) {
-  //   this.lastState = this.state;
-  //   this.state = state;
-  //
-  //   var audioFile;
-  //   if (state === 0) {
-  //     this.lastState = 2;
-  //   }
-  //   if (state === 1) {
-  //     audioFile = "audio/chafing.mp3";
-  //   }
-  //   if (state === 2) {
-  //     audioFile = "audio/the-calling.mp3";
-  //   }
-  //   if (state === 3) {
-  //     audioFile = "audio/just-like-magic.mp3";
-  //   }
-  //
-  //   if (state === 1 || state === 2 || state === 3) {
-  //     var audio = new Audio(audioFile);
-  //     audio.play();
-  //   }
-  //
-  //   this.updateDisplay(this.timeLeft);
-  //
-  // };
-
   Pomodoro.prototype.updateState = function(state) {
 	this.lastState = this.state;
 	this.state = state;
@@ -48,10 +21,10 @@
       audioFile = "audio/chafing.mp3";
 			break;
 		case 2:
-      audioFile = "audio/the-calling.mp3";
+      audioFile = "audio/just-like-magic.mp3";
 			break;
 		case 3:
-      audioFile = "audio/just-like-magic.mp3";
+      audioFile = "audio/the-calling.mp3";
 	}
     if (state === 1 || state === 2 || state === 3) {
         var audio = new Audio(audioFile);
@@ -148,21 +121,41 @@
 
   document.getElementById("pomodoro-minus").addEventListener("click", function() {
 
-    document.getElementById("pomodoro-minutes").textContent = (pomo.sessionMinutes / 60) - 1;
+    document.querySelector(".pomodoro-minutes").textContent = (pomo.sessionMinutes / 60) - 1;
     pomo.updatePomoTime(pomo.sessionMinutes - 60);
+    // animation
+    document.querySelector(".pomodoro-minutes").classList.add("underline");
+    setTimeout(function() {
+      document.querySelector(".pomodoro-minutes").classList.remove("underline");
+    }, 250);
   });
 
   document.getElementById("pomodoro-plus").addEventListener("click", function() {
-    document.getElementById("pomodoro-minutes").textContent = (pomo.sessionMinutes / 60) + 1;
+    document.querySelector(".pomodoro-minutes").textContent = (pomo.sessionMinutes / 60) + 1;
     pomo.updatePomoTime(pomo.sessionMinutes += 60);
+    // animation
+    document.querySelector(".pomodoro-minutes").classList.add("underline");
+    setTimeout(function() {
+      document.querySelector(".pomodoro-minutes").classList.remove("underline");
+    }, 250);
   });
 
   document.getElementById("break-minus").addEventListener("click", function() {
-    document.getElementById("break-minutes").textContent = (pomo.breakMinutes / 60) - 1;
+    document.querySelector(".break-minutes").textContent = (pomo.breakMinutes / 60) - 1;
     pomo.updateBreakTime(pomo.breakMinutes -= 60);
+    // animation
+    document.querySelector(".break-minutes").classList.add("underline");
+    setTimeout(function() {
+      document.querySelector(".break-minutes").classList.remove("underline");
+    }, 250);
   });
 
   document.getElementById("break-plus").addEventListener("click", function() {
-    document.getElementById("break-minutes").textContent = (pomo.breakMinutes / 60) + 1;
+    document.querySelector(".break-minutes").textContent = (pomo.breakMinutes / 60) + 1;
     pomo.updateBreakTime(pomo.breakMinutes += 60);
+    // animation
+    document.querySelector(".break-minutes").classList.add("underline");
+    setTimeout(function() {
+      document.querySelector(".break-minutes").classList.remove("underline");
+    }, 250);
   });

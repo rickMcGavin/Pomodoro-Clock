@@ -97,7 +97,8 @@ body {
   text-align: center;
 }
 
-  .number-row span {
+  .pomodoro-minutes,
+  .break-minutes {
     background: $primary-color;
     border: none;
     border-bottom: 4px solid $primary-color-dark;
@@ -107,7 +108,44 @@ body {
     text-align: center;
     width: 75px;
     height: 27px;
+    transition: 0.25s ease-in;
   }
+
+    .underline {
+      background: $primary-color;
+      border: none;
+      border-bottom: 4px solid $accent-color;
+      color: $primary-color-text;
+      display: inline-block;
+      font-size: 20px;
+      text-align: center;
+      width: 75px;
+      height: 27px;
+      transition: border-bottom 0.25s ease-out;
+    }
+
+  // .right-side:before,{
+  //   content: "";
+  //   display: block;
+  //   position: relative;
+  //   right: -37.5px;
+  //   top: 27px;
+  //   height: 4px;
+  //   width: 50%;
+  //   transition: 0.5s;
+  // }
+  //
+  // .right-side:after {
+  //   content: "";
+  //   display: block;
+  //   position: relative;
+  //   right: -37.5px;
+  //   top: 0;
+  //   height: 4px;
+  //   width: 50%;
+  //   background: $accent-color;
+  //   transition: 0.5s;
+  // }
 
   .number-row i {
     color: $primary-color-dark;
