@@ -11,16 +11,23 @@
   <body>
     <div class="clock-container">
       <h1 class="header">Pomodoro Timer</h1>
-      <div class="display">
-        <span id="clock"></span>
+      <div id="under-display">
+        <div id="display">
+          <span id="clock"></span>
+        </div>
       </div>
       <div class="number-row">
-        <input class="pomodoro-minutes" type="number" name="pomodoro-session" value="25">
-        <input class="break-minutes" type="number" name="break-session" value="5">
+        <i id="pomodoro-minus" class="fa fa-minus" aria-hidden="true"></i>
+        <span id="pomodoro-minutes">25</span>
+        <i id="pomodoro-plus" class="fa fa-plus" aria-hidden="true"></i>
+        <i id="break-minus" class="fa fa-minus" aria-hidden="true"></i>
+        <span id="break-minutes">5</span>
+        <i id="break-plus" class="fa fa-plus" aria-hidden="true"></i>
       </div>
       <div class="control-row">
         <i class="fa fa-play-circle-o play" aria-hidden="true"></i>
         <i class="fa fa-pause-circle-o pause hide" aria-hidden="true"></i>
+        <i class="fa fa-refresh reset" aria-hidden="true"></i>
       </div>
     </div>
     <script type="text/javascript" src="js/pomodoro.js"></script>

@@ -1,113 +1,168 @@
 
 
-var Pomodoro = function(pomodoroTime, breakTime, displayElementId) {
-  this.session = pomodoroTime * 60;
-  this.break = breakTime * 60;
-  this.state = 0;
-  this.lastState = 2;
-  this.timeLeft = pomodoroTime * 60;
-  this.timerDisplay = displayElementId;
-};
-
-Pomodoro.prototype.begin = function() {
-  var self = this;
-  if (this.state === 0 || this.state === 1) {
-    this.newState(this.lastState === 2 ? 2: 3);
-    tick();
-    this.timer = setInterval(function() {
-      tick();
-    }, 1000);
-  }
-
-  function tick() {
-    self.timeLeft = self.timeLeft - 1;
-    self.updateDisplay(self.timeLeft);
-    if (self.timeLeft === 0) {
-      self.timeLeft = self.state === 2 ? self.break : self.cycle;
-      self.newState(self.state === 2 ? 3 : 2);
-    }
-  }
-};
-
-Pomodoro.prototype.pause = function() {
-  if (this.state === 2 || this.state === 3) {
-    this.newState(1);
-    clearInterval(this.timer);
-  }
-};
-
-Pomodoro.prototype.reset = function() {
-  this.newState(0);
-  this.timeLeft = this.cycle;
-  clearInterval(this.timer);
-  this.updateDispaly(this.timeLeft);
-};
-
-Pomodoro.prototype.updateDisplay = function(time, message) {
-  document.getElementById(this.timerDisplay).textContent = getFormattedTime(time);
-
-  function getFormattedTime(seconds) {
-    var minsLeft = Math.floor(seconds / 60);
-    var secondsLeft = seconds - (minsLeft * 60);
-
-    return minsLeft + ":" + zeroPad(secondsLeft);
-
-    function zeroPad(number) {
-      return number < 10 ? "0" + number : number;
-    }
-
-  }
-};
-
-Pomodoro.prototype.updateTimes = function(cycleTime, breakTime) {
-  this.cycle = cycleTime * 60;
-  this.break = breakTime * 60;
-  this.reset();
-};
-
-Pomodoro.prototype.newState = function(state) {
-  this.lastState = this.state;
-  this.state = state;
-  var audioFile;
-
-  if (state === 0) {
+    var Pomodoro = function(displayId, sessionMinutes, breakMinutes) {
+    this.displayId = displayId;
+    this.sessionMinutes =  sessionMinutes * 60;
+    this.breakMinutes = breakMinutes * 60;
+    this.state = 0;
     this.lastState = 2;
-  }
-  if (state === 1) {
-    audioFile = "http://oringz.com/orginz-uploads/sounds-882-solemn.mp3";
-  }
-  if (state === 2) {
-    audioFile = "http://oringz.com/oringz-uploads/sounds-766-graceful.mp3";
-  }
-  if (state === 3) {
-    audioFile = "http://oringz.com/oringz-uploads/31_oringz-pack-nine-15.mp3";
-  }
+    this.timeLeft = sessionMinutes * 60;
+  };
 
-  if (state === 1 || state === 2 || state === 3) {
-    var audio = new Audio(audioFile);
-    audio.play();
-  }
+  // Pomodoro.protoype.updateState = function(state) {
+  //   this.lastState = this.state;
+  //   this.state = state;
+  //
+  //   var audioFile;
+  //   if (state === 0) {
+  //     this.lastState = 2;
+  //   }
+  //   if (state === 1) {
+  //     audioFile = "audio/chafing.mp3";
+  //   }
+  //   if (state === 2) {
+  //     audioFile = "audio/the-calling.mp3";
+  //   }
+  //   if (state === 3) {
+  //     audioFile = "audio/just-like-magic.mp3";
+  //   }
+  //
+  //   if (state === 1 || state === 2 || state === 3) {
+  //     var audio = new Audio(audioFile);
+  //     audio.play();
+  //   }
+  //
+  //   this.updateDisplay(this.timeLeft);
+  //
+  // };
 
-  this.updateDisplay(this.timeLeft);
+  Pomodoro.prototype.updateState = function(state) {
+	this.lastState = this.state;
+	this.state = state;
+	var audioFile;
+	switch (state) {
+		case 0:
+      this.lastState = 2;
+			break;
+		case 1:
+      audioFile = "audio/chafing.mp3";
+			break;
+		case 2:
+      audioFile = "audio/the-calling.mp3";
+			break;
+		case 3:
+      audioFile = "audio/just-like-magic.mp3";
+	}
+    if (state === 1 || state === 2 || state === 3) {
+        var audio = new Audio(audioFile);
+        audio.play();
+    }
+	this.updateDisplay(this.timeLeft);
 };
 
-var playButton = document.querySelector(".play");
-var pauseButton = document.querySelector(".pause");
-var pomo = new Pomodoro(25, 5, "clock");
+  Pomodoro.prototype.updateDisplay = function(minutes) {
+    if (minutes % 60 < 10) {
+      document.getElementById(this.displayId).textContent = Math.floor(minutes / 60).toString() + ":" + "0" + (minutes % 60).toString();
+    } else {
+      document.getElementById(this.displayId).textContent = Math.floor(minutes / 60).toString() + ":" + (minutes % 60).toString();
+    }
+  };
 
-function hideRemove() {
-  playButton.classList.remove("hide");
-  pauseButton.classList.remove("hide");
-}
+  Pomodoro.prototype.begin = function() {
+    var self = this;
+    if (this.state === 0 || this.state === 1) {
+      this.updateState(this.lastState === 2 ? 2 : 3);
+      countDown();
+      this.timer = setInterval(function() {
+        countDown();
+      }, 1000);
+    }
 
-playButton.addEventListener("click", function() {
-  pomo.begin();
-  hideRemove();
-  playButton.classList.add("hide");
-});
 
-pauseButton.addEventListener("click", function() {
-  pomo.pause();
-  hideRemove();
-  pauseButton.classList.add("hide");
-});
+
+    function countDown() {
+      self.timeLeft--;
+      self.updateDisplay(self.timeLeft);
+      if (self.timeLeft === 0) {
+        self.timeLeft = self.state === 2 ? self.breakMinutes : self.sessionMinutes;
+        self.updateState(self.state === 2 ? 3: 2);
+      }
+    }
+  };
+
+  Pomodoro.prototype.pause = function() {
+    if (this.state === 2 || this.state === 3) {
+      this.updateState(1);
+      clearInterval(this.timer);
+    }
+  };
+
+  Pomodoro.prototype.reset = function() {
+    this.updateState(0);
+    this.timeLeft = this.sessionMinutes;
+    clearInterval(this.timer);
+    this.updateDisplay(this.timeLeft);
+  };
+
+  Pomodoro.prototype.updatePomoTime = function(sessionTime) {
+    this.sessionMinutes = sessionTime;
+    this.reset();
+  };
+
+  Pomodoro.prototype.updateBreakTime = function(breakTime) {
+    this.breakMinutes = breakTime;
+    this.reset();
+  };
+
+  var playButton = document.querySelector(".play");
+  var pauseButton = document.querySelector(".pause");
+  var resetButton = document.querySelector(".reset");
+
+  var pomo = new Pomodoro("clock", 25, 5);
+
+  function removeHide() {
+    playButton.classList.remove("hide");
+    pauseButton.classList.remove("hide");
+  }
+
+  playButton.addEventListener("click", function() {
+    pomo.begin();
+    removeHide();
+    playButton.classList.add("hide");
+  });
+
+  pauseButton.addEventListener("click", function() {
+    pomo.pause();
+    removeHide();
+    pauseButton.classList.add("hide");
+  });
+
+  resetButton.addEventListener("click", function() {
+    pomo.reset();
+    removeHide();
+    pauseButton.classList.add("hide");
+  });
+
+
+
+
+  document.getElementById("pomodoro-minus").addEventListener("click", function() {
+
+    document.getElementById("pomodoro-minutes").textContent = (pomo.sessionMinutes / 60) - 1;
+    pomo.updatePomoTime(pomo.sessionMinutes - 60);
+  });
+
+  document.getElementById("pomodoro-plus").addEventListener("click", function() {
+    document.getElementById("pomodoro-minutes").textContent = (pomo.sessionMinutes / 60) + 1;
+    pomo.updatePomoTime(pomo.sessionMinutes += 60);
+  });
+
+  document.getElementById("break-minus").addEventListener("click", function() {
+    document.getElementById("break-minutes").textContent = (pomo.breakMinutes / 60) - 1;
+    pomo.updateBreakTime(pomo.breakMinutes -= 60);
+  });
+
+  document.getElementById("break-plus").addEventListener("click", function() {
+    document.getElementById("break-minutes").textContent = (pomo.breakMinutes / 60) + 1;
+    pomo.updateBreakTime(pomo.breakMinutes += 60);
+  });
