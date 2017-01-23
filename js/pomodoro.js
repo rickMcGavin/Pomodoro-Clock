@@ -117,12 +117,15 @@
   });
 
 
-
-
   document.getElementById("pomodoro-minus").addEventListener("click", function() {
 
-    document.querySelector(".pomodoro-minutes").textContent = (pomo.sessionMinutes / 60) - 1;
-    pomo.updatePomoTime(pomo.sessionMinutes - 60);
+    if (((pomo.sessionMinutes / 60) - 1) <= 1) {
+      document.querySelector(".pomodoro-minutes").textContent = 1;
+      pomo.updatePomoTime(pomo.sessionMinutes = 60);
+    } else {
+      document.querySelector(".pomodoro-minutes").textContent = (pomo.sessionMinutes / 60) - 1;
+      pomo.updatePomoTime(pomo.sessionMinutes -= 60);
+    }
     // animation
     document.querySelector(".pomodoro-minutes").classList.add("underline");
     setTimeout(function() {
@@ -141,8 +144,14 @@
   });
 
   document.getElementById("break-minus").addEventListener("click", function() {
-    document.querySelector(".break-minutes").textContent = (pomo.breakMinutes / 60) - 1;
-    pomo.updateBreakTime(pomo.breakMinutes -= 60);
+    if ((pomo.breakMinutes / 60) - 1 <= 1) {
+      document.querySelector(".break-minutes").textContent = 1;
+      pomo.updateBreakTime(pomo.breakMinutes = 60);
+    } else {
+      document.querySelector(".break-minutes").textContent = (pomo.breakMinutes / 60) - 1;
+      pomo.updateBreakTime(pomo.breakMinutes -= 60);
+    }
+
     // animation
     document.querySelector(".break-minutes").classList.add("underline");
     setTimeout(function() {
